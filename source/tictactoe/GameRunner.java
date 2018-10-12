@@ -21,7 +21,7 @@ public class GameRunner{
             game.startGame();
         } else{
             System.out.println();
-            System.out.println("Please choose either 1 or 2");
+            System.out.println("Please enter either 1 or 2 in the given options");
         }
     }
 }
