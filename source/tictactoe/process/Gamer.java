@@ -1,9 +1,10 @@
 public class Gamer{
     private String name;
-    private String position;
+    private int position;
     private String tictacSymbol;
-    private String winCount;
+    private int winCount;
     private String movesHistory;
+    private int currentMove;
     GamerInterface gamerType;
 
     public Gamer(GamerInterface gamerType){
@@ -18,11 +19,11 @@ public class Gamer{
         this.name = name;
     }
 
-    public String getPosition(){
+    public int getPosition(){
         return this.position;
     }
 
-    public void setPosition(String position){
+    public void setPosition(int position){
         this.position = position;
     }
 
@@ -34,11 +35,11 @@ public class Gamer{
         this.tictacSymbol = tictacSymbol;
     }
 
-    public String getWinCount(){
+    public int getWinCount(){
         return this.winCount;
     }
 
-    public void setWinCount(String winCount){
+    public void setWinCount(int winCount){
         this.winCount = winCount;
     }
 
@@ -47,10 +48,26 @@ public class Gamer{
     }
 
     public void setMovesHistory(String movesHistory){
-        this.movesHistory = movesHistory;
+        if(movesHistory != null && !(movesHistory.equals("")))
+            this.movesHistory = this.movesHistory+movesHistory;
     }
 
+    public int getCurrentMove(){
+        if(this.currentMove == 0)
+            findNextMove();
+        return this.currentMove;
+    }
+
+    public void setCurrentMove(int currentMove){
+        this.currentMove = currentMove;
+    }    
+
     public void findNextMove(){
-        gamerType.computeNextMove();
+        this.currentMove = gamerType.computeNextMove();
+    }
+
+    public void refresh(){
+        this.currentMove = 0;
+        this.movesHistory = null;
     }
 }

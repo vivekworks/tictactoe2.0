@@ -1,3 +1,3 @@
 public interface GamerInterface{
-    void computeNextMove();
+    int computeNextMove();
 }

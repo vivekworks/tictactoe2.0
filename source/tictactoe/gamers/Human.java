@@ -1,5 +1,5 @@
 public class Human implements GamerInterface{
-    public void computeNextMove(){
-        
+    public int computeNextMove(){
+        return 0;
     }
 }
