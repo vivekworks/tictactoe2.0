@@ -34,10 +34,6 @@ public class Game{
         System.out.println("-------------");
     }
 
-    void assignTicTacToe(){
-        
-    }
-
     void initializeMap(){
         moveMap = new HashMap<Integer, String>();
         moveMap.put(1," ");
