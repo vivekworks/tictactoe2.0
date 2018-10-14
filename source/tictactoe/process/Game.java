@@ -1,3 +1,12 @@
+package tictactoe.process;
+
+import tictactoe.process.Gamer;
+import tictactoe.process.GameProcessor;
+import java.util.Scanner;
+import java.util.HashMap;
+import tictactoe.gamers.Computer;
+import tictactoe.gamers.Human;
+
 public class Game{
 
     String result;
@@ -52,7 +61,7 @@ public class Game{
         gamer2.setTictacSymbol(TICTACTOE_O);
     }
 
-    void startGame(){
+    public void startGame(){
     	System.out.println(gamer1.getName()+" ("+gamer1.getTictacSymbol()+") vs "+gamer2.getName()+" ("+gamer2.getTictacSymbol()+")");
         initializeMap();
         while(true){
@@ -63,7 +72,7 @@ public class Game{
     			getGamerInput();
     		if(processGamerMove()){
     			System.out.println(currentGamer.getName()+" wins!");
-    			currentGamer.setWinCount(currentGamer.getWinCount+1);
+    			currentGamer.setWinCount(currentGamer.getWinCount()+1);
     			System.out.println("Scoreboard");
     			System.out.println("-----------");
     			System.out.println("Games played - "+gameCount);
@@ -80,7 +89,7 @@ public class Game{
     			else
 					break;
 			}
-			currentGamer.setMovesHistory(currentGamer.getCurrentMove());
+			currentGamer.setMovesHistory(String.valueOf(currentGamer.getCurrentMove()));
 			currentGamer.setCurrentMove(0);
     	}
     }
@@ -121,7 +130,7 @@ public class Game{
     	System.out.println();
     }
 
-    public int getGamerInput(){
+    public void getGamerInput(){
     	int gamerInput = 0;
         try{
             gamerInput = gameInput.nextInt();
@@ -132,7 +141,7 @@ public class Game{
             getGamerInput();
         }
         validateInput(gamerInput);
-        currentGamer.setCurrentMove(gameInput);
+        currentGamer.setCurrentMove(gamerInput);
     }
 
     public void validateInput(int gamerInput){

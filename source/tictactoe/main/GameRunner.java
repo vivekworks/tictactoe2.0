@@ -1,3 +1,8 @@
+package tictactoe.main;
+
+import java.util.Scanner;
+import tictactoe.process.Game;
+
 public class GameRunner{
     String gameType;
     String gameCount;

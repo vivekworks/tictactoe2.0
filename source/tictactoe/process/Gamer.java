@@ -1,3 +1,7 @@
+package tictactoe.process;
+
+import tictactoe.interfaces.GamerInterface;
+
 public class Gamer{
     private String name;
     private int position;
@@ -5,7 +9,7 @@ public class Gamer{
     private int winCount;
     private String movesHistory;
     private int currentMove;
-    GamerInterface gamerType;
+    private GamerInterface gamerType;
 
     public Gamer(GamerInterface gamerType){
         this.gamerType = gamerType;

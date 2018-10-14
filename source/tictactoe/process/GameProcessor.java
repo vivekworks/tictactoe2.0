@@ -1,3 +1,7 @@
+package tictactoe.process;
+
+import java.util.HashMap;
+
 public class GameProcessor{
 	
 	public boolean computePosition(int position, HashMap<Integer, String> moveMap){
