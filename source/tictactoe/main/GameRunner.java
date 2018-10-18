@@ -15,17 +15,29 @@ public class GameRunner{
 
     void begin(){
         while(true){
-            System.out.println("****Welcome to TicTacToe****");
-            System.out.println("Player 1 : X ; Player 2 : O");
-            System.out.println("1. Single Player Game");
-            System.out.println("2. Two Player Game");
-            System.out.println("3. Quit Game");
+            System.out.println();
+            System.out.println("******************************************");
+            System.out.println("*             *************              *");
+            System.out.println("*             * TICTACTOE *              *");
+            System.out.println("*             *************              *");
+            System.out.println("*                                        *");
+            System.out.println("*      Player 1 : X ; Player 2 : O       *");
+            System.out.println("*                                        *");
+            System.out.println("*           1. One Player                *");
+            System.out.println("*           2. Two Player                *");
+            System.out.println("*           3. Quit                      *");
+            System.out.println("*                                        *");
+            System.out.println("******************************************");
+            System.out.println();
             System.out.print("Choose an option ---> ");
             Scanner terminalInput = new Scanner(System.in);
             int gameOption = terminalInput.nextInt();
+            terminalInput.nextLine();
             if(gameOption ==1 || gameOption == 2){
-                Game game = new Game(gameOption);
+                Game game = new Game(gameOption,terminalInput);
                 game.startGame();
+                if(game.getGameOver())
+                    break;
             } else{
                 if(gameOption == 3){
                     break;
