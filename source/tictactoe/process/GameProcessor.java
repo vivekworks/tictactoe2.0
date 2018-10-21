@@ -1,85 +1,105 @@
 package tictactoe.process;
 
 import java.util.HashMap;
+import java.util.ArrayList;
 
 public class GameProcessor{
-	
-	public boolean computePosition(int position, HashMap<Integer, String> moveMap){
-	    int v1=0,v2=0,v3=0;
-        //Horizontal Check
+
+    public static int[] computeHorizontalPosition(int position){
+        int[] horizontalArray = {0,0,0};
         if(position%3 == 1){
-            v1 = position;
-            v2 = position+1;
-            v3 = position+2;
+            horizontalArray[0] = position;
+            horizontalArray[1] = position+1;
+            horizontalArray[2] = position+2;
         } else if(position%3 == 2){
-            v1 = position-1;
-            v2 = position;
-            v3 = position+1;
+            horizontalArray[0] = position-1;
+            horizontalArray[1] = position;
+            horizontalArray[2] = position+1;
         } else if(position%3 == 0){
-            v1 = position-2;
-            v2 = position-1;
-            v3 = position;
-        } 
-        if((moveMap.get(v1) != null && moveMap.get(v2) != null && moveMap.get(v3) != null)
-            && (moveMap.get(v1).equals(moveMap.get(v2)) && moveMap.get(v3).equals(moveMap.get(v2)))){
+            horizontalArray[0] = position-2;
+            horizontalArray[1] = position-1;
+            horizontalArray[2] = position;
+        }
+        return horizontalArray;
+    }
+
+    public static int[] computeVerticalPosition(int position){
+        int[] verticalArray = {0,0,0};
+        if(position-3 <= 0){
+            verticalArray[0] = position;
+            verticalArray[1] = position+3;
+            verticalArray[2] = position+6;
+        } else if((position-3 > 0) && (position+3 <= 9)){
+            verticalArray[0] = position-3;
+            verticalArray[1] = position;
+            verticalArray[2] = position+3;
+        } else if(position+3 > 9){
+            verticalArray[0] = position-6;
+            verticalArray[1] = position-3;
+            verticalArray[2] = position;
+        }
+        return verticalArray;
+    }
+
+    public static ArrayList<int[]> computeDiagonalPosition(int position){
+        int[] diagonalArray = {0,0,0};
+        ArrayList<int[]> diagonalList = new ArrayList<int[]>();
+        if(position+4 == 5 || position-4 == 5){
+            if(position+4 == 5){
+                diagonalArray[0] = position;
+                diagonalArray[1] = position+4;
+                diagonalArray[2] = position+8;
+            } else{
+                diagonalArray[0] = position-8;
+                diagonalArray[1] = position-4;
+                diagonalArray[2] = position;
+            }
+        } else if(position+2 == 5 || position-2 == 5){
+            if(position+2 == 5){
+                diagonalArray[0] = position;
+                diagonalArray[1] = position+2;
+                diagonalArray[2] = position+4;
+            } else{
+                diagonalArray[0] = position-4;
+                diagonalArray[1] = position-2;
+                diagonalArray[2] = position;
+            }
+        } else if(position == 5){
+            int[] diagonalArrayTwo = {1,5,9};
+            diagonalList.add(diagonalArrayTwo);
+            diagonalArray[0] = 3;
+            diagonalArray[1] = 5;
+            diagonalArray[2] = 7;
+        }
+        diagonalList.add(diagonalArray);
+        return diagonalList;
+    }
+
+    public static boolean computePosition(int position, HashMap<Integer, String> moveMap){
+
+        int[] horizontalArray = computeHorizontalPosition(position);
+        int[] verticalArray = computeVerticalPosition(position);
+        ArrayList<int[]> diagonalArray = computeDiagonalPosition(position);
+
+        //Horizontal Check
+        if((moveMap.get(horizontalArray[0]) != null && moveMap.get(horizontalArray[1]) != null && moveMap.get(horizontalArray[2]) != null)
+            && (moveMap.get(horizontalArray[0]).equals(moveMap.get(horizontalArray[1])) && moveMap.get(horizontalArray[2]).equals(moveMap.get(horizontalArray[1])))){
             return true;
         }
 
         //Vertical Check
-        v1=0;v2=0;v3=0;
-        if(position-3 <= 0){
-            v1 = position;
-            v2 = position+3;
-            v3 = position+6;
-        } else if((position-3 > 0) && (position+3 <= 9)){
-            v1 = position-3;
-            v2 = position;
-            v3 = position+3;
-        } else if(position+3 > 9){
-            v1 = position-6;
-            v2 = position-3;
-            v3 = position;
-        }
-        if((moveMap.get(v1) != null && moveMap.get(v2) != null && moveMap.get(v3) != null)
-            && (moveMap.get(v1).equals(moveMap.get(v2)) && moveMap.get(v3).equals(moveMap.get(v2)))){
+        if((moveMap.get(verticalArray[0]) != null && moveMap.get(verticalArray[1]) != null && moveMap.get(verticalArray[2]) != null)
+            && (moveMap.get(verticalArray[0]).equals(moveMap.get(verticalArray[1])) && moveMap.get(verticalArray[2]).equals(moveMap.get(verticalArray[1])))){
             return true;
         }
 
         //Diagonal Check
-        v1=0;v2=0;v3=0;
-        if(position+4 == 5 || position-4 == 5){
-            if(position+4 == 5){
-                v1 = position;
-                v2 = position+4;
-                v3 = position+8;
-            } else{
-                v1 = position-8;
-                v2 = position-4;
-                v3 = position;
-            }
-        } else if(position+2 == 5 || position-2 == 5){
-            if(position+2 == 5){
-                v1 = position;
-                v2 = position+2;
-                v3 = position+4;
-            } else{
-                v1 = position-4;
-                v2 = position-2;
-                v3 = position;
-            }
-        }
-        if((moveMap.get(v1) != null && moveMap.get(v2) != null && moveMap.get(v3) != null)
-            && (moveMap.get(v1).equals(moveMap.get(v2)) && moveMap.get(v3).equals(moveMap.get(v2)))){
-            return true;
-        }
-
-        if(position == 5){
-            if(((moveMap.get(3) != null && moveMap.get(5) != null && moveMap.get(7) != null)
-            && (moveMap.get(3).equals(moveMap.get(5)) && moveMap.get(7).equals(moveMap.get(5)))) || ((moveMap.get(1) != null && moveMap.get(5) != null && moveMap.get(9) != null)
-            && (moveMap.get(1).equals(moveMap.get(5)) && moveMap.get(9).equals(moveMap.get(5))))){
+        for(int[] diagonal :diagonalArray){
+            if((moveMap.get(diagonal[0]) != null && moveMap.get(diagonal[1]) != null && moveMap.get(diagonal[2]) != null)
+                && (moveMap.get(diagonal[0]).equals(moveMap.get(diagonal[1])) && moveMap.get(diagonal[2]).equals(moveMap.get(diagonal[1])))){
                 return true;
-            }
+            }            
         }
         return false;
-    }
+    }	
 }

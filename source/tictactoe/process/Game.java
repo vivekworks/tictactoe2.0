@@ -18,7 +18,6 @@ public class Game{
     public final String TICTACTOE_O = "O";
     private Scanner terminalInput;
     private HashMap<Integer, String> moveMap;
-    private GameProcessor gameProcessor;
 
     public Game(int gameOption, Scanner terminalInput){
         gamer1 = new Gamer(new Human());
@@ -28,7 +27,6 @@ public class Game{
 			gamer2 = new Gamer(new Human());
 		this.terminalInput = terminalInput;
         setupGamers(gameOption);
-        gameProcessor = new GameProcessor();
         moveMap = new HashMap<Integer, String>();
     }
 
@@ -203,7 +201,7 @@ public class Game{
     public boolean processGamerMove(){
         moveMap.put(currentGamer.getCurrentMove(),currentGamer.getTictacSymbol());
         if(moveMap.size() >= 5)
-        	return gameProcessor.computePosition(currentGamer.getCurrentMove(), moveMap);
+        	return GameProcessor.computePosition(currentGamer.getCurrentMove(), moveMap);
         return false;
     }
 
