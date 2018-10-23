@@ -3,8 +3,17 @@ package tictactoe.gamers;
 import tictactoe.interfaces.GamerInterface;
 
 public class Computer implements GamerInterface{
-    public int computeNextMove(){
-     	int position = 0;
-     	return position;   
+	int position;
+    public int getNextMove(HashMap<Integer, String> moveMap){
+     	
+     	return this.position;   
+    }
+
+    public void defend(){
+
+    }
+
+    public void attack(){
+
     }
 }

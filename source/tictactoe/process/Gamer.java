@@ -57,18 +57,17 @@ public class Gamer{
     }
 
     public int getCurrentMove(){
-        if(this.currentMove == 0)
-            findNextMove();
         return this.currentMove;
     }
 
     public void setCurrentMove(int currentMove){
         this.currentMove = currentMove;
-    }    
-
-    public void findNextMove(){
-        this.currentMove = gamerType.computeNextMove();
     }
+
+    public void getNextMove(HashMap<Integer, String> moveMap){
+        int currentMove = gamerType.computeNextMove(moveMap);
+        setCurrentMove(currentMove);
+    }    
 
     public void refresh(){
         this.currentMove = 0;

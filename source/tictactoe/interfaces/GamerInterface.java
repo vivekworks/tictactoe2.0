@@ -1,5 +1,5 @@
 package tictactoe.interfaces;
 
 public interface GamerInterface{
-    int computeNextMove();
+    int getNextMove(HashMap<Integer, String> moveMap);
 }

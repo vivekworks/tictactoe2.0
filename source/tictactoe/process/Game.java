@@ -76,7 +76,7 @@ public class Game{
             System.out.println();
             displayTicTacToe();
     		currentGamer = currentGamer == null ? gamer1 : (currentGamer.getPosition() == 1 ? gamer2 : gamer1);
-    		if(currentGamer.getCurrentMove() <= 0)
+    		if(currentGamer.getCurrentMove(this.moveMap) <= 0)
     			getGamerInput();
     		if(processGamerMove()){
     			result = "W";
@@ -171,8 +171,12 @@ public class Game{
         System.out.print(currentGamer.getName()+" : Please enter a position from 1 to 9 --> ");
         do{
             try{
-                gamerInput = terminalInput.nextInt();
-                terminalInput.nextLine();
+                if(currentGamer instanceof Human){
+                    gamerInput = terminalInput.nextInt();
+                    terminalInput.nextLine();
+                } else if(currentGamer instanceof Computer){
+                    currentGamer.getNextMove(this.moveMap);
+                }
             } catch(Exception e){
                 System.out.println("Undesirable input!");
                 //System.out.println(currentGamer.getName()+" : Please enter a legal position from 1 to 9 --> ");
