@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.HashMap;
 import tictactoe.gamers.Computer;
 import tictactoe.gamers.Human;
+import tictactoe.utility.GameUtil;
 
 public class Game{
 
@@ -16,18 +17,19 @@ public class Game{
     private Gamer gamer1, gamer2, currentGamer;
     public final String TICTACTOE_X = "X";
     public final String TICTACTOE_O = "O";
+    private GameUtil gameUtility = GameUtil.getInstance();
     private Scanner terminalInput;
     private HashMap<Integer, String> moveMap;
 
-    public Game(int gameOption, Scanner terminalInput){
+    public Game(int gameOption){
         gamer1 = new Gamer(new Human());
 		if(gameOption == 1)
 			gamer2 = new Gamer(new Computer());
 		else
 			gamer2 = new Gamer(new Human());
-		this.terminalInput = terminalInput;
+		this.terminalInput = gameUtility.getGameTerminal();
         setupGamers(gameOption);
-        moveMap = new HashMap<Integer, String>();
+        moveMap = gameUtility.getGameMap();
     }
 
     public void setGameOver(boolean gO){
@@ -76,7 +78,7 @@ public class Game{
             System.out.println();
             displayTicTacToe();
     		currentGamer = currentGamer == null ? gamer1 : (currentGamer.getPosition() == 1 ? gamer2 : gamer1);
-    		if(currentGamer.getCurrentMove(this.moveMap) <= 0)
+    		if(currentGamer.getCurrentMove() <= 0)
     			getGamerInput();
     		if(processGamerMove()){
     			result = "W";
@@ -171,11 +173,11 @@ public class Game{
         System.out.print(currentGamer.getName()+" : Please enter a position from 1 to 9 --> ");
         do{
             try{
-                if(currentGamer instanceof Human){
+                if(currentGamer.getGamerType() instanceof Human){
                     gamerInput = terminalInput.nextInt();
                     terminalInput.nextLine();
-                } else if(currentGamer instanceof Computer){
-                    currentGamer.getNextMove(this.moveMap);
+                } else if(currentGamer.getGamerType() instanceof Computer){
+                    currentGamer.computeNextMove();
                 }
             } catch(Exception e){
                 System.out.println("Undesirable input!");
@@ -205,7 +207,7 @@ public class Game{
     public boolean processGamerMove(){
         moveMap.put(currentGamer.getCurrentMove(),currentGamer.getTictacSymbol());
         if(moveMap.size() >= 5)
-        	return GameProcessor.computePosition(currentGamer.getCurrentMove(), moveMap);
+        	return GameProcessor.computePosition(currentGamer.getCurrentMove());
         return false;
     }
 

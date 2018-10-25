@@ -4,8 +4,7 @@ import tictactoe.interfaces.GamerInterface;
 
 public class Computer implements GamerInterface{
 	int position;
-    public int getNextMove(HashMap<Integer, String> moveMap){
-     	
+    public int computeNextMove(){
      	return this.position;   
     }
 

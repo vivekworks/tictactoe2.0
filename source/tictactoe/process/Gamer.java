@@ -64,13 +64,20 @@ public class Gamer{
         this.currentMove = currentMove;
     }
 
-    public void getNextMove(HashMap<Integer, String> moveMap){
-        int currentMove = gamerType.computeNextMove(moveMap);
-        setCurrentMove(currentMove);
+    public void computeNextMove(){
+        setCurrentMove(gamerType.computeNextMove());
     }    
 
     public void refresh(){
         this.currentMove = 0;
         this.movesHistory = null;
+    }
+
+    public GamerInterface getGamerType(){
+        return this.gamerType;
+    }
+
+    public void setGamerType(GamerInterface gamerType){
+        this.gamerType = gamerType;
     }
 }

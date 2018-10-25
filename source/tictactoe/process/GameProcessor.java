@@ -2,6 +2,7 @@ package tictactoe.process;
 
 import java.util.HashMap;
 import java.util.ArrayList;
+import tictactoe.utility.GameUtil;
 
 public class GameProcessor{
 
@@ -75,11 +76,12 @@ public class GameProcessor{
         return diagonalList;
     }
 
-    public static boolean computePosition(int position, HashMap<Integer, String> moveMap){
+    public static boolean computePosition(int position){
 
         int[] horizontalArray = computeHorizontalPosition(position);
         int[] verticalArray = computeVerticalPosition(position);
         ArrayList<int[]> diagonalArray = computeDiagonalPosition(position);
+        HashMap<Integer, String> moveMap = GameUtil.getInstance().getGameMap();
 
         //Horizontal Check
         if((moveMap.get(horizontalArray[0]) != null && moveMap.get(horizontalArray[1]) != null && moveMap.get(horizontalArray[2]) != null)

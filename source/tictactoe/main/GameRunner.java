@@ -2,11 +2,18 @@ package tictactoe.main;
 
 import java.util.Scanner;
 import tictactoe.process.Game;
+import tictactoe.utility.GameUtil;
 
 public class GameRunner{
     String gameType;
     String gameCount;
     String nextPlayer;
+    private GameUtil gameUtility = GameUtil.getInstance();
+    private Scanner terminalInput;
+
+    public GameRunner(){
+        this.terminalInput = gameUtility.getGameTerminal();
+    }
 
     public static void main(String[] args){
         GameRunner gameRunner = new GameRunner();
@@ -30,11 +37,10 @@ public class GameRunner{
             System.out.println("******************************************");
             System.out.println();
             System.out.print("Choose an option ---> ");
-            Scanner terminalInput = new Scanner(System.in);
             int gameOption = terminalInput.nextInt();
             terminalInput.nextLine();
             if(gameOption ==1 || gameOption == 2){
-                Game game = new Game(gameOption,terminalInput);
+                Game game = new Game(gameOption);
                 game.startGame();
                 if(game.getGameOver())
                     break;
