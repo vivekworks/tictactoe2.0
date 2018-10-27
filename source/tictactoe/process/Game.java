@@ -19,17 +19,17 @@ public class Game{
     public final String TICTACTOE_O = "O";
     private GameUtil gameUtility = GameUtil.getInstance();
     private Scanner terminalInput;
-    private HashMap<Integer, String> moveMap;
+    private HashMap<Integer, String> gameMap;
 
     public Game(int gameOption){
-        gamer1 = new Gamer(new Human());
+        this.terminalInput = gameUtility.getGameTerminal();
+        gamer1 = new Gamer(new Human(TICTACTOE_X));
 		if(gameOption == 1)
-			gamer2 = new Gamer(new Computer());
+			gamer2 = new Gamer(new Computer(TICTACTOE_O));
 		else
-			gamer2 = new Gamer(new Human());
-		this.terminalInput = gameUtility.getGameTerminal();
+			gamer2 = new Gamer(new Human(TICTACTOE_O));
         setupGamers(gameOption);
-        moveMap = gameUtility.getGameMap();
+        gameMap = gameUtility.getGameMap();
     }
 
     public void setGameOver(boolean gO){
@@ -43,31 +43,43 @@ public class Game{
     void setupGamers(int gameOption){
     	//Setup Gamer1
     	gamer1.setPosition(1);
-        System.out.println();
-    	System.out.print("Enter a name for Player 1 : ");
-        setGamer(gamer1);
         gamer1.setTictacSymbol(TICTACTOE_X);
-
         //Setup Gamer2
+        gamer2.setPosition(2);
+        gamer2.setTictacSymbol(TICTACTOE_O);
+
         if(gameOption == 1){
-            gamer1.setPosition(2);
-            System.out.print("Hi! My name is Venom. I'm your opponent for the day. Do you want to change my name ? Y / N --> ");
+            System.out.println();
+            System.out.print("Enter your name : ");
+            setGamer(gamer1);
+            System.out.println();
+            System.out.println("Hi! My name is Venom. I'm your opponent for the day.");
+            System.out.print("Do you want to change my name ? Y / N --> ");
             try{
 	            String nameOption = terminalInput.nextLine();
-	            if(nameOption != null && !(nameOption.equals("")) && nameOption.equals("Y")){
-	            	System.out.print("Enter a name for Player 2 : ");
+	            if(nameOption != null && !(nameOption.equalsIgnoreCase("")) && nameOption.equalsIgnoreCase("Y")){
+                    System.out.println();
+	            	System.out.print("Enter a name for PLAYER 2 : ");
 	            	setGamer(gamer2);
 	        	} else{
+                    System.out.println();
 	        		System.out.println("Venom it is! Cool!");
+                    gamer2.setName("Venom");
 	        	}
 	        } catch(Exception e){
+                System.out.println();
 	        	System.out.println("Venom it is! Cool!");
+                gamer2.setName("Venom");
 	        }
         } else if(gameOption == 2){
-            System.out.print("Enter a name for Player 2 : ");
+            System.out.println();
+            System.out.print("Enter a name for PLAYER 1 : ");
+            setGamer(gamer1);
+            System.out.println();
+            System.out.print("Enter a name for PLAYER 2 : ");
             setGamer(gamer2);
         }
-        gamer2.setTictacSymbol(TICTACTOE_O);
+        
         System.out.println();
     }
 
@@ -78,9 +90,8 @@ public class Game{
             System.out.println();
             displayTicTacToe();
     		currentGamer = currentGamer == null ? gamer1 : (currentGamer.getPosition() == 1 ? gamer2 : gamer1);
-    		if(currentGamer.getCurrentMove() <= 0)
-    			getGamerInput();
-    		if(processGamerMove()){
+    		getGamerInput();
+            if(processGamerMove()){
     			result = "W";
 			} else{
                 if(moveCount>= 8){
@@ -90,19 +101,26 @@ public class Game{
             moveCount++;
             if(result != null){
                 gameCount++;
+                System.out.println();
                 displayTicTacToe();
                 if(result.equalsIgnoreCase("W")){
-                    System.out.println(currentGamer.getName()+" wins!");
+                    System.out.println();
+                    System.out.println(currentGamer.getName().toUpperCase()+" WINS!");
+                    terminalInput.nextLine();
                     currentGamer.setWinCount(currentGamer.getWinCount()+1);
                 } else{
                     System.out.println("It's a glorious Tie! Well played both!");
                 }
                 System.out.println();
-                System.out.println("Scoreboard");
+                System.out.println("********************");
+                System.out.println();
+                System.out.println("SCOREBOARD");
                 System.out.println("-----------");
-                System.out.println("Games played - "+gameCount);
+                System.out.println("GAMES PLAYED - "+gameCount);
                 System.out.println(gamer1.getName()+" - "+ gamer1.getWinCount());
                 System.out.println(gamer2.getName()+" - "+ gamer2.getWinCount());
+                System.out.println();
+                System.out.println("********************");
                 System.out.println();
                 System.out.println("Do you want to continue playing this game ? Y / N");
                 String option = terminalInput.nextLine();
@@ -134,24 +152,24 @@ public class Game{
     
     void displayTicTacToe(){
         System.out.println("-------------");
-        System.out.println("| "+moveMap.get(1)+" | "+moveMap.get(2)+" | "+moveMap.get(3)+" |");
+        System.out.println("| "+gameMap.get(1)+" | "+gameMap.get(2)+" | "+gameMap.get(3)+" |");
         System.out.println("-------------");
-        System.out.println("| "+moveMap.get(4)+" | "+moveMap.get(5)+" | "+moveMap.get(6)+" |");
+        System.out.println("| "+gameMap.get(4)+" | "+gameMap.get(5)+" | "+gameMap.get(6)+" |");
         System.out.println("-------------");
-        System.out.println("| "+moveMap.get(7)+" | "+moveMap.get(8)+" | "+moveMap.get(9)+" |");
+        System.out.println("| "+gameMap.get(7)+" | "+gameMap.get(8)+" | "+gameMap.get(9)+" |");
         System.out.println("-------------");
     }
 
     void initializeMap(){
-        moveMap.put(1," ");
-        moveMap.put(2," ");
-        moveMap.put(3," ");
-        moveMap.put(4," ");
-        moveMap.put(5," ");
-        moveMap.put(6," ");
-        moveMap.put(7," ");
-        moveMap.put(8," ");
-        moveMap.put(9," ");
+        gameMap.put(1," ");
+        gameMap.put(2," ");
+        gameMap.put(3," ");
+        gameMap.put(4," ");
+        gameMap.put(5," ");
+        gameMap.put(6," ");
+        gameMap.put(7," ");
+        gameMap.put(8," ");
+        gameMap.put(9," ");
     }
 
     void setGamer(Gamer gamer){
@@ -162,7 +180,16 @@ public class Game{
 	    		gamer.setName(gamerName);
 	    		break;
     		} else{
-    			System.out.print("Enter a valid name for Gamer "+gamer.getPosition()+" : ");
+                System.out.println();
+    			System.out.print("Enter a valid name for PLAYER "+gamer.getPosition()+" : ");
+                gamerName = terminalInput.nextLine();
+                if(gamerName != null && !(gamerName.equals("")))
+                    gamer.setName(gamerName);
+                else{
+                    System.out.println("Default name is assigned for PLAYER "+gamer.getPosition());
+                    gamer.setName("PLAYER "+gamer.getPosition());
+                    break;
+                }
     		}
     	}
     }
@@ -170,20 +197,23 @@ public class Game{
     public void getGamerInput(){
     	int gamerInput = 0;
         System.out.println();
-        System.out.print(currentGamer.getName()+" : Please enter a position from 1 to 9 --> ");
+        
         do{
             try{
                 if(currentGamer.getGamerType() instanceof Human){
+                    System.out.print(currentGamer.getName()+" : Please enter a position from 1 to 9 --> ");
                     gamerInput = terminalInput.nextInt();
-                    terminalInput.nextLine();
                 } else if(currentGamer.getGamerType() instanceof Computer){
-                    currentGamer.computeNextMove();
+                    gamerInput = currentGamer.computeNextMove();
+                    System.out.println("Move from "+currentGamer.getName()+" --> "+gamerInput);
                 }
             } catch(Exception e){
                 System.out.println("Undesirable input!");
+                terminalInput.next();
                 //System.out.println(currentGamer.getName()+" : Please enter a legal position from 1 to 9 --> ");
             }
-        }while(!validateInput(gamerInput));
+        } while(!validateInput(gamerInput));
+        
         currentGamer.setCurrentMove(gamerInput);
     }
 
@@ -191,13 +221,12 @@ public class Game{
         if(gamerInput <= 0 || gamerInput > 9 ){
             System.out.println("Illegal position.");
             System.out.println();
-            System.out.println(currentGamer.getName()+" : Please enter a legal position from 1 to 9");
             currentGamer.setCurrentMove(0);
             return false;
         }
-        if (moveMap.get(gamerInput) != null && (moveMap.get(gamerInput).trim() != null && !(moveMap.get(gamerInput).trim().equals("")))){
+        if (gameMap.get(gamerInput) != null && (gameMap.get(gamerInput).trim() != null && !(gameMap.get(gamerInput).trim().equals("")))){
             System.out.println("Position already occupied.");
-            System.out.print(currentGamer.getName()+" : Please enter a legal position from 1 to 9 --> ");
+            System.out.println();
             currentGamer.setCurrentMove(0);
             return false;
         }
@@ -205,8 +234,8 @@ public class Game{
     }
 
     public boolean processGamerMove(){
-        moveMap.put(currentGamer.getCurrentMove(),currentGamer.getTictacSymbol());
-        if(moveMap.size() >= 5)
+        gameMap.put(currentGamer.getCurrentMove(),currentGamer.getTictacSymbol());
+        if(gameMap.size() >= 5)
         	return GameProcessor.computePosition(currentGamer.getCurrentMove());
         return false;
     }

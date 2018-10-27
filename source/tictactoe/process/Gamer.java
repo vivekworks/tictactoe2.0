@@ -20,7 +20,10 @@ public class Gamer{
     }
 
     public void setName(String name){
-        this.name = name;
+        if(name != null && !(name.equals("")))
+            this.name = name.toUpperCase();
+        else
+            this.name = "PLAYER "+this.position;
     }
 
     public int getPosition(){
@@ -64,8 +67,8 @@ public class Gamer{
         this.currentMove = currentMove;
     }
 
-    public void computeNextMove(){
-        setCurrentMove(gamerType.computeNextMove());
+    public int computeNextMove(){
+        return gamerType.computeNextMove();
     }    
 
     public void refresh(){

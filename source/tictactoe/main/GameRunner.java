@@ -5,9 +5,6 @@ import tictactoe.process.Game;
 import tictactoe.utility.GameUtil;
 
 public class GameRunner{
-    String gameType;
-    String gameCount;
-    String nextPlayer;
     private GameUtil gameUtility = GameUtil.getInstance();
     private Scanner terminalInput;
 
@@ -49,11 +46,12 @@ public class GameRunner{
                     break;
                 }
                 System.out.println();
-                System.out.println("Please enter either 1 or 2 in the given options");
+                System.out.println("Please enter one of the given options");
             }
         }
         System.out.println();
         System.out.println("Bye! Have a nice day!");
         System.out.println("Come back later!");
+        System.out.println();
     }
 }
