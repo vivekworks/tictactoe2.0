@@ -106,11 +106,11 @@ public class Game{
                 if(result.equalsIgnoreCase("W")){
                     System.out.println();
                     System.out.println(currentGamer.getName().toUpperCase()+" WINS!");
-                    terminalInput.nextLine();
                     currentGamer.setWinCount(currentGamer.getWinCount()+1);
                 } else{
                     System.out.println("It's a glorious Tie! Well played both!");
                 }
+                terminalInput.nextLine();
                 System.out.println();
                 System.out.println("********************");
                 System.out.println();
@@ -209,11 +209,15 @@ public class Game{
                 }
             } catch(Exception e){
                 System.out.println("Undesirable input!");
+                System.out.println();
+                gamerInput = 0;
                 terminalInput.next();
+                continue;
                 //System.out.println(currentGamer.getName()+" : Please enter a legal position from 1 to 9 --> ");
             }
-        } while(!validateInput(gamerInput));
-        
+            if(validateInput(gamerInput))
+                break;
+        } while(true);
         currentGamer.setCurrentMove(gamerInput);
     }
 
